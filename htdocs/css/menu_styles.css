@@ -1,0 +1,57 @@
+.menu-widget {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-top: 2px solid #d46921;
+    z-index: 10;
+}
+
+.menu-toggle {
+    background-color: #237e17;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.menu-toggle:hover {
+    background-color: #45a049;
+}
+
+.menu-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+    background-color: #444;
+    color: white;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.menu-content.open {
+    max-height: 300px; /* Устанавливаем максимальную высоту для открытого меню */
+    padding: 10px; /* Добавляем внутренние отступы при открытии */
+}
+
+.menu-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-content ul li {
+    margin: 10px 0;
+}
+
+.menu-content ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu-content ul li a:hover {
+    text-decoration: underline;
+}

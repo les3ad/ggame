@@ -1,0 +1,75 @@
+/* Фоновое изображение для города */
+body {
+    background-image: url('../assets/city_background.jpg'); /* Укажи путь к своему изображению города */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Полупрозрачный фон для городского меню */
+.city-container {
+    background: rgba(0, 0, 0, 0.6); /* Более прозрачный, чтобы увидеть фон */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    color: #fff;
+}
+
+/* Заголовок города с тенью */
+.city-container h2 {
+    font-size: 42px;
+    margin-bottom: 25px;
+    color: #f1c40f; /* Добавлен золотой оттенок для заголовка */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Стили для списка меню */
+.city-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Элементы списка меню */
+.city-container ul li {
+    margin: 15px 0;
+}
+
+/* Кнопки меню с градиентом */
+.city-container a, .city-container button {
+    display: block;
+    padding: 14px;
+    background: linear-gradient(45deg, #3498db, #2ecc71); /* Градиент на кнопке */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Анимация при наведении */
+.city-container a:hover, .city-container button:hover {
+    background: linear-gradient(45deg, #2980b9, #27ae60);
+    transform: translateY(-3px); /* Эффект поднятия при наведении */
+}
+
+/* Стили кнопки выхода с красным градиентом */
+.city-container button {
+    background: linear-gradient(45deg, #e74c3c, #e67e22);
+}
+
+/* Стили кнопки выхода при наведении */
+.city-container button:hover {
+    background: linear-gradient(45deg, #c0392b, #d35400);
+}

@@ -1,0 +1,206 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #84ebc0;
+    text-align: center;
+    overflow-y: hidden;
+    height: 100vh;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: block;
+    position: relative;
+}
+
+/* Информация о координатах игрока */
+.player-coords {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    background-color: #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 10;
+}
+
+.player-info {
+    margin: 5px auto;
+    font-size: 14px;
+    background-color: #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    width: 90%;
+}
+
+.player-stats {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    background-color: #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 10;
+}
+
+/* Универсальные стили для кнопок "Враги", "Ресурсы", "Город" */
+.enemy-info, .resource-info, .city-info {
+    position: absolute;
+    font-size: 14px;
+    background-color: #2c3e50;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px; /* Увеличенные скругления */
+    color: white;
+    z-index: 10;
+    text-align: center;
+    line-height: 20px; /* Уменьшена линия для адаптивности текста */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.enemy-info h4, .resource-info h4, .city-info h4 {
+    margin: 0;
+    font-size: 12px; /* Уменьшен шрифт для кнопок */
+    color: #ecf0f1;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%; /* Ограничиваем ширину текста */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Добавляем троеточие, если текст выходит за пределы */
+}
+
+/* Позиции кнопок */
+.enemy-info {
+    bottom: 60px;
+    left: calc(73% - 70px);
+}
+
+.resource-info {
+    bottom: 60px;
+    left: calc(73% + 0px);
+}
+
+.city-info {
+    bottom: 60px;
+    left: calc(73% + 0px);
+}
+
+/* Список врагов */
+.enemies-list {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    width: 200px;
+    background-color: rgba(52, 73, 94, 0.9);
+    z-index: 100;
+    display: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.enemy-card, .resource-card, .city-card {
+    background-color: #2c3e50;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Тени для карточек */
+}
+
+.enemy-details, .resource-details, .city-details {
+    font-size: 12px;
+    color: white;
+}
+
+.enemy-details span, .resource-details span, .city-details span {
+    display: block;
+}
+
+/* Список ресурсов */
+.resources-list {
+    position: absolute;
+    top: 60px;
+    left: 220px;
+    width: 200px;
+    background-color: rgba(52, 73, 94, 0.9);
+    z-index: 100;
+    display: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Действия для врагов, ресурсов и города */
+.enemy-actions, .resource-actions, .city-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.enemy-actions button, .resource-actions button, .city-actions button {
+    padding: 8px 12px;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    border-radius: 8px; /* Более округленные кнопки */
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.enemy-actions button:hover, .resource-actions button:hover, .city-actions button:hover {
+    background-color: #c0392b;
+}
+
+/* Мобильная адаптация */
+@media only screen and (max-width: 600px) {
+    .enemy-details, .resource-details, .city-details {
+        font-size: 10px;
+    }
+
+    .enemy-actions button, .resource-actions button, .city-actions button {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
+}
+.resource-actions span {
+    color: #e74c3c; /* Красный цвет для текста "Недоступно" */
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.resource-actions button {
+    display: inline-block; /* Кнопка отображается, если ресурс доступен */
+}
+
+.resource-actions span {
+    display: none; /* По умолчанию скрываем текст "Недоступно" */
+}
+
+/* Если ресурс недоступен, скрываем кнопку и отображаем текст */
+.resource-card.unavailable .resource-actions button {
+    display: none; /* Скрываем кнопку */
+}
+
+.resource-card.unavailable .resource-actions span {
+    display: inline-block; /* Отображаем текст "Недоступно" */
+}

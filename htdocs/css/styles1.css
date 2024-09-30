@@ -1,0 +1,44 @@
+/* Стили для карты */
+#game-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Выдвижное меню внизу экрана */
+.menu-widget {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.menu-toggle {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.menu-content {
+    display: none;
+    padding: 10px;
+}
+
+.menu-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+}
+
+.menu-content a:hover {
+    text-decoration: underline;
+}

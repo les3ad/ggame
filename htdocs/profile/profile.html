@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль игрока</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-top: 20px;
+        }
+
+        .stats-list, .quest-list, .inventory-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .stats-column {
+            flex: 1;
+            min-width: 300px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f0f4f7;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .stats-column:hover {
+            transform: translateY(-5px);
+        }
+
+        .stats-list li {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Прогресс-бар */
+        .progress-bar {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            background-color: #4caf50;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Кнопка возврата на карту */
+        .return-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .return-button a {
+            padding: 15px 30px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .return-button a:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        .return-button a:active {
+            background-color: #1a6ca3;
+        }
+
+        /* Интерактивные блоки */
+        .inventory-header, .quest-header, .profession-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .inventory-header:hover, .quest-header:hover, .profession-header:hover {
+            background-color: #34495e;
+        }
+
+        .inventory-content, .quest-content, .profession-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background-color: #f4f4f4;
+            padding: 0 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .inventory-content ul, .quest-content ul, .profession-content ul {
+            list-style-type: none;
+            padding: 15px;
+        }
+
+        .inventory-content ul li, .quest-content ul li, .profession-content ul li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .inventory-content ul li:hover, .quest-content ul li:hover, .profession-content ul li:hover {
+            background-color: #e1e5e8;
+        }
+
+        .drop-form {
+            display: inline-block;
+        }
+
+        .drop-form input {
+            width: 40px;
+            margin-right: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .drop-form button {
+            padding: 6px 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .drop-form button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Кнопка "Подробнее" */
+        .quest-toggle {
+            color: #3498db;
+            cursor: pointer;
+            font-size: 14px;
+            border: 1px solid #3498db;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .quest-toggle:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* Улучшенный блок активных квестов */
+        .quest-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .quest-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .quest-city {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .quest-details {
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        /* Адаптивный дизайн */
+        @media (max-width: 768px) {
+            .profile-grid {
+                flex-direction: column;
+            }
+
+            .stats-column {
+                margin-bottom: 20px;
+            }
+
+            .return-button a {
+                font-size: 16px;
+                padding: 12px 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .quest-item {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .return-button a {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .quest-title {
+                font-size: 16px;
+            }
+
+            .quest-city {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Профиль игрока</h1>
+
+        <div class="profile-grid">
+            <div class="stats-column">
+                <h2>Основные характеристики</h2>
+                <ul class="stats-list">
+                    <li><strong>Уровень:</strong> <?php echo $player_stats['level']; ?></li>
+                    <li><strong>Очки навыков:</strong> <?php echo $player_stats['skill_points']; ?></li>
+                    <li><strong>Опыт:</strong> <?php echo $player_stats['exp']; ?> / <?php echo $next_level_exp; ?></li>
+                    <li>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: <?php echo (($current_exp_in_level / ($next_level_exp - $current_level_exp)) * 100); ?>%;"></div>
+                        </div>
+                    </li>
+                    <li><strong>Здоровье:</strong> <?php echo $player_stats['health']; ?> / <?php echo $player_stats['max_health']; ?></li>
+                </ul>
+            </div>
+
+            <div class="stats-column">
+                <h2>Боевые характеристики</h2>
+                <ul class="stats-list">
+                    <li><strong>Сила:</strong> <?php echo $player_stats['strength']; ?></li>
+                    <li><strong>Защита:</strong> <?php echo $player_stats['defense']; ?></li>
+                    <li><strong>Ловкость:</strong> <?php echo $player_stats['agility']; ?></li>
+                    <li><strong>Уворот:</strong> <?php echo $player_stats['dodge']; ?></li>
+                    <li><strong>Удача:</strong> <?php echo $player_stats['luck']; ?></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Отображение активных квестов -->
+        <div class="quest-container">
+            <div class="quest-header" onclick="toggleQuests()">Активные квесты</div>
+            <div class="quest-content">
+                <ul>
+                    <?php foreach ($active_quests as $quest) { 
+                        $city_name = get_city_name_by_id($quest['city_id']); // Получение города
+                    ?>
+                        <li class="quest-item">
+                            <div class="quest-title">
+                                <?php echo $quest['title']; ?>
+                            </div>
+                            <div class="quest-city">
+                                Город: <?php echo $city_name; ?>
+                            </div>
+                            <div class="quest-toggle" onclick="toggleQuestDetails(<?php echo $quest['id']; ?>)" id="toggle-<?php echo $quest['id']; ?>">(Подробнее)</div>
+                            <div class="quest-details" id="details-<?php echo $quest['id']; ?>" style="display: none;">
+                                <?php echo $quest['description']; ?>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Отображение инвентаря -->
+        <div class="inventory">
+            <div class="inventory-header" onclick="toggleInventory()">Инвентарь</div>
+            <div class="inventory-content" id="inventory-content">
+                <ul>
+                    <?php foreach ($inventory as $item) { 
+                        $quantity = isset($item['quantity']) ? $item['quantity'] : 0;
+                    ?>
+                        <li>
+                            <?php echo $item['name'] . ' x' . $quantity; ?>
+                            <form method="POST" class="drop-form">
+                                <input type="hidden" name="drop_resource_id" value="<?php echo $item['resource_id']; ?>">
+                                <input type="number" name="drop_quantity" min="1" max="<?php echo $quantity; ?>" required>
+                                <button type="submit">Выбросить</button>
+                            </form>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Отображение профессий -->
+        <div class="profession-container">
+            <div class="profession-header" onclick="toggleProfessions()">Профессии</div>
+            <div class="profession-content">
+                <ul>
+                    <?php foreach ($professions as $profession) { 
+                        $required_exp_for_next_profession_level = get_required_experience_for_profession_level($profession['level']);
+                    ?>
+                        <li>
+                            <?php echo $profession['name'] . ' - Уровень: ' . $profession['level']; ?>
+                            <div>Опыт: <?php echo $profession['experience']; ?> / 
+                                <?php echo $required_exp_for_next_profession_level; ?>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Кнопка для возврата на карту -->
+        <div class="return-button">
+            <a href="../player/game.php" class="scrollable-text">Вернуться на карту</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleInventory() {
+            const content = document.getElementById('inventory-content');
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        }
+
+        function toggleProfessions() {
+            const content = document.querySelector('.profession-content');
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        }
+
+        function toggleQuests() {
+            const content = document.querySelector('.quest-content');
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        }
+
+        function toggleQuestDetails(questId) {
+            const details = document.getElementById('details-' + questId);
+            const toggleText = document.getElementById('toggle-' + questId);
+
+            if (details.style.display === 'none' || details.style.display === '') {
+                details.style.display = 'block';
+                toggleText.textContent = '(Скрыть)';
+            } else {
+                details.style.display = 'none';
+                toggleText.textContent = '(Подробнее)';
+            }
+        }
+    </script>
+</body>
+</html>
